@@ -55,6 +55,7 @@ void Tilemap::load() {
         else if (strcmp(fileExt, ".bmp") == 0)
         {
             this->loadValuesFromImage();
+            this->loadCollidersFromImage();
         }
     }
 }
@@ -114,6 +115,26 @@ void Tilemap::loadValuesFromImage() {
 
     this->map.tileCountX = image.width;
     this->map.tileCountY = image.height;
+    this->map.tiles = (Tile *)malloc(image.width * image.height * sizeof(Tile));
+    for (int i = 0; i < image.width; ++i) {
+        for (int j = 0; j < image.height; ++j) {
+            const int index = i * image.width + j;
+            const Color cellColor = image.data[index];
+            this->map.tiles[index].value = cellColor.b;
+        }
+    }
+}
+
+void Tilemap::loadCollidersFromImage() {
+    Image image = ImageHandler::LoadImage(this->collidersMapFilePath);
+
+    for (int i = 0; i < image.width; ++i) {
+        for (int j = 0; j < image.height; ++j) {
+            const int index = i * image.width + j;
+            const Color cellColor = image.data[index];
+            this->map.tiles[index].collider = cellColor.b;
+        }
+    }
 }
 
 void Tilemap::draw() {
