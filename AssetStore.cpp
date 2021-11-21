@@ -10,7 +10,7 @@ AssetStore::AssetStore() {
     this->titleTexture = TextureHandler::LoadTexture("resources/title.bmp");
     this->youDiedTexture = TextureHandler::LoadTexture("resources/lose.bmp");
     this->youWonTexture = TextureHandler::LoadTexture("resources/win.bmp");
-    this->tilesetTexture = TextureHandler::LoadTexture("resources/tileset-de.bmp");
+    this->tilesetTexture = TextureHandler::LoadTexture("resources/tileset.bmp");
     this->fontTexture = TextureHandler::LoadTexture("resources/font.bmp");
     this->logoTexture = TextureHandler::LoadTexture("resources/logo.bmp");
     this->menuSong = LoadMusicStream("resources/scottaltham_-_Never_Heard_a_Rhyme_Like_This_Before.mp3");
