@@ -60,7 +60,7 @@ void GameStatus::updatePlayer() {
 }
 
 void GameStatus::updateEnemy() {
-    this->enemy->update(this->player);
+    if (Map::getInstance().areThereEnemies()) this->enemy->update(this->player);
 }
 
 void GameStatus::changeCurrentScreen(Screen *nextScreen) {

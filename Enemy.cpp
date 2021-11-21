@@ -43,6 +43,7 @@ void Enemy::updateBulletPosition() {
 void Enemy::createBulletIfNeeded() {
 	if (this->currentFrame % this->currentBulletPattern->getFramesBetweenWaves() == 0) {
 		this->currentBulletPattern->createBullet(this->currentFrame, this->position, &this->bulletPositions);
+		PlaySound(AssetStore::getInstance().getEnemyLaserSong());
 	}
 }
 

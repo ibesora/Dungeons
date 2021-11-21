@@ -17,9 +17,11 @@ AssetStore::AssetStore() {
     this->menuSong = LoadMusicStream("resources/scottaltham_-_Never_Heard_a_Rhyme_Like_This_Before.mp3");
     this->gameSong = LoadMusicStream("resources/Karstenholymoly_-_The_Thunderstorm.mp3");
     this->gameSong = LoadMusicStream("resources/Karstenholymoly_-_The_Thunderstorm.mp3");
+    this->enemyLaserSound = LoadSound("resources/laserSmall_004.ogg");
 
     SetMusicVolume(this->menuSong, 0.1f);
     SetMusicVolume(this->gameSong, 0.1f);
+    SetSoundVolume(this->enemyLaserSound, 0.05f);
 }
 
 void AssetStore::unloadTextures() {
@@ -40,6 +42,7 @@ void AssetStore::loadMusic() {
 void AssetStore::unloadMusic() {
     UnloadMusicStream(this->menuSong);
     UnloadMusicStream(this->gameSong);
+    UnloadSound(this->enemyLaserSound);
 }
 
 void AssetStore::unloadFonts() {

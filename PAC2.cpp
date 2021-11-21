@@ -1,5 +1,6 @@
 #define SUPPORT_FILEFORMAT_MP3
 #define RAUDIO_STANDALONE
+#define SUPPORT_FILEFORMAT_OGG
 #include "AssetStore.h"
 #include "WindowHandler.h"
 #include "GameStatus.h"

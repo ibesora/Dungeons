@@ -1,5 +1,6 @@
 #pragma once
 #define SUPPORT_FILEFORMAT_MP3
+#define SUPPORT_FILEFORMAT_OGG
 #define RAUDIO_STANDALONE
 #include "Renderer.h"
 #include "Tilemap.h"
@@ -20,6 +21,7 @@ public:
     Texture2D getHeartTexture() { return this->heartTexture; }
     Music getMenuSong() { return this->menuSong; }
     Music getGameSong() { return this->gameSong; }
+    Sound getEnemyLaserSong() { return this->enemyLaserSound; }
     void unloadTextures();
     void unloadFonts();
     void loadMusic();
@@ -36,4 +38,5 @@ protected:
     Texture2D heartTexture;
     Music menuSong;
     Music gameSong;
+    Sound enemyLaserSound;
 };
