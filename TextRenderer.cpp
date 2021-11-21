@@ -30,6 +30,12 @@ Rectangle TextRenderer::getCharacterMapping(const char character) {
     else if (character == ' ') base = 91;
     else if (character == '/') base = 79;
     else if (character == '-') base = 68;
+    else if (character == '.') base = 62;
+    else if (character == '(') base = 73;
+    else if (character == ')') base = 74;
+    else if (character == '!') base = 67;
+    else if (character == '\'') base = 71;
+    else if (character == ',') base = 63;
 
     const int charWidth = 49;
     const int charHeight = 46;

@@ -6,6 +6,7 @@
 Map::Map() {
     this->screenHeight = 0;
     this->screenWidth = 0;
+    this->timesAtTheBeginning = 0;
     this->lastDoorTraversed = (Tilemap::FloorValues)0;
     this->currentRoom = nullptr;
     this->previousRoom = nullptr;
@@ -125,6 +126,7 @@ void Map::buildMap() {
 }
 
 void Map::reset() {
+    this->timesAtTheBeginning = 0;
     this->changeRoom(this->rooms[0]);
 }
 
@@ -226,4 +228,9 @@ Vector2 Map::movePlayer(Rectangle oldPlayer, Rectangle newPlayer) {
 void Map::changeRoom(Room *nextRoom) {
     this->previousRoom = this->currentRoom;
     this->currentRoom = nextRoom;
+    if (this->currentRoom->getType() == Room::RoomType::Start) {
+        this->timesAtTheBeginning++;
+    }
 }
+
+int Map::getTimesAtTheBeginning() { return this->timesAtTheBeginning; }

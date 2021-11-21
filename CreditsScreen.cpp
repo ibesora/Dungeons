@@ -22,6 +22,9 @@ void CreditsScreen::draw() {
     TextRenderer::getInstance().draw(Texts::MyName, 115, 240, 20, LIGHTGRAY);
     TextRenderer::getInstance().draw(Texts::Assets, 115, 330, 20, YELLOW);
     TextRenderer::getInstance().draw(Texts::FontCredits, 115, 350, 20, LIGHTGRAY);
+    TextRenderer::getInstance().draw(Texts::Song2, 115, 370, 20, LIGHTGRAY);
+    TextRenderer::getInstance().draw(Texts::SpriteSheet, 115, 390, 20, LIGHTGRAY);
+    TextRenderer::getInstance().draw(Texts::FontCredits, 115, 410, 20, LIGHTGRAY);
     TextRenderer::getInstance().draw(Texts::GoBackToTitleScreen, 115, 500, 20, YELLOW);
 
 }

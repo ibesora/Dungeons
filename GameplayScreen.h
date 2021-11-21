@@ -14,9 +14,15 @@ public:
 
 private:
     void updatePlayerTexture();
+    void updateText();
     void drawBackground();
     void drawPlayer();
+    void drawText();
+    const char *getTextFromId(int id);
 
     int textAnimFrame;
+    int timesAtTheBeginning;
+    float textAlpha;
+    bool showingText;
     Rectangle currentFrameRec;
 };

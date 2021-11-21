@@ -15,6 +15,7 @@ public:
 	Vector2 getPlayerStartingPosition();
 	void unload();
 	Vector2 movePlayer(Rectangle oldPlayer, Rectangle newPlayer);
+	int getTimesAtTheBeginning();
 protected:
     Map();
 	void buildMap();
@@ -24,6 +25,7 @@ protected:
 	Tilemap::FloorValues lastDoorTraversed;
 	int screenWidth;
 	int screenHeight;
+	int timesAtTheBeginning;
 	std::vector<Room*> rooms;
 	std::vector<Tilemap *> tilemaps;
 };
