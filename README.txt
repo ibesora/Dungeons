@@ -11,4 +11,8 @@ Added methods to import tilemaps from a bmp. To do this I've created a small app
 Added a new tileset
 Added "motivational" messages when you get back to the beginning of the dungeon
 Added an additional layer with objects in some rooms
-* Add bullets
+Add an enemy that fires bullets in the last room
+
+How to play:
+	Move with the up/down/right/left arrows
+	Press P to pause

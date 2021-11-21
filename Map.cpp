@@ -124,6 +124,7 @@ void Map::buildMap() {
     fourDoors8->setDownRoom(downBlocked);
     fourDoors8->setLeftRoom(leftBlocked);
     fourDoors8->setRightRoom(exit);
+    exit->setLeftRoom(fourDoors8);
 }
 
 void Map::reset() {
