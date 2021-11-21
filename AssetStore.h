@@ -16,14 +16,13 @@ public:
     Texture2D getYouDiedTexture() { return this->youDiedTexture; }
     Texture2D getFontTexture() { return this->fontTexture; }
     Texture2D getLogoTexture() { return this->logoTexture; }
-    Tilemap *getTilemap() { return this->tileMap; }
+    Texture2D getTilesetTexture() { return this->tilesetTexture; }
     Music getMenuSong() { return this->menuSong; }
     Music getGameSong() { return this->gameSong; }
     void unloadTextures();
     void unloadFonts();
     void loadMusic();
     void unloadMusic();
-    void unloadTilemap();
 protected:
     AssetStore();
     Texture2D playerTexture;
@@ -35,5 +34,4 @@ protected:
     Texture2D logoTexture;
     Music menuSong;
     Music gameSong;
-    Tilemap *tileMap;
 };

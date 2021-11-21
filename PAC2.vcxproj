@@ -117,6 +117,7 @@
       <PreprocessorDefinitions>GRAPHICS_API_OPENGL_33;PLATFORM_DESKTOP;GLFW_INCLUDE_NONE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\workspace\PG2\include\external\glfw\include;C:\workspace\PG2\include\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -153,11 +154,13 @@
     <ClCompile Include="ImageHandler.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="LogoScreen.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="PAC2.cpp" />
     <ClCompile Include="AssetStore.cpp" />
     <ClCompile Include="PauseScreen.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Room.cpp" />
     <ClCompile Include="TextRenderer.cpp" />
     <ClCompile Include="Texts.cpp" />
     <ClCompile Include="TextureHandler.cpp" />
@@ -176,9 +179,11 @@
     <ClInclude Include="ImageHandler.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="LogoScreen.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="PauseScreen.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Room.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="TextRenderer.h" />
     <ClInclude Include="Texts.h" />

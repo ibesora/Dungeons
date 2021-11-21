@@ -3,6 +3,7 @@
 #include "AssetStore.h"
 #include <algorithm>
 #include "Renderer.h"
+#include "Map.h"
 
 const int XSpeed = 20;
 const int YSpeed = 20;
@@ -31,11 +32,9 @@ void Player::updatePlayer() {
 }
 
 void Player::updatePosition(float x, float y) {
-    Tilemap *tilemap = AssetStore::getInstance().getTilemap();
-    const Rectangle playerRect = { x, y, PlayerWidthInPx, PlayerHeightInPx };
-    if (!tilemap->checkCollision(playerRect)) {
-        this->position = { x, y };
-    }
+    const Rectangle currentPlayerRect = { this->position.x, this->position.y, PlayerWidthInPx, PlayerHeightInPx };
+    const Rectangle newPlayerRect = { x, y, PlayerWidthInPx, PlayerHeightInPx };
+    this->position = Map::getInstance().movePlayer(currentPlayerRect, newPlayerRect);
 }
 
 Vector2 Player::getPosition() { return this->position; }

@@ -6,6 +6,7 @@
 #include "InputHandler.h"
 #include "AssetStore.h"
 #include "Texts.h"
+#include "Map.h"
 
 GameplayScreen::GameplayScreen(int width, int height) : Screen(ScreenType::Gameplay, width, height) {
     this->currentFrameRec = { 0, 0, AssetStore::getInstance().getPlayerTexture().width, AssetStore::getInstance().getPlayerTexture().height };
@@ -32,7 +33,7 @@ void GameplayScreen::draw() {
 }
 
 void GameplayScreen::drawBackground() {
-    AssetStore::getInstance().getTilemap()->draw();
+    Map::getInstance().draw();
 }
 
 void GameplayScreen::drawPlayer() {

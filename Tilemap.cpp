@@ -7,37 +7,18 @@
 #include <stdio.h>
 #include "ImageHandler.h"
 #include "Renderer.h"
+#include <vector>
 
-#define TILESET_TILES  32
 #define PLAYER_COLLISION_PADDING    12
+#define SPRITESHEET_COLUMNS 19
 
-// NOTE: Tileset rectangles are directly provided in this array but
-// they can also be loaded from a file... usually generated with
-// a tilemap editor software
-static Rectangle TilesetRecs[TILESET_TILES] = {
-    { 0, 0, 32, 32 }, { 32, 0, 32, 32 },        // 1, 2
-    { 64, 0, 32, 32 }, { 0, 32, 32, 32 },       // 3, 4
-    { 32, 32, 32, 32 }, { 64, 32, 32, 32 },     // 5, 6
-    { 0, 64, 32, 32 }, { 32, 64, 32, 32 },      // 7, 8
-    { 64, 64, 32, 32 }, { 96, 0, 32, 32 },      // 9, 10
-    { 128, 0, 32, 32 }, { 96, 32, 32, 32 },     // 11, 12
-    { 128, 32, 32, 32 }, { 96, 64, 32, 32 },    // 13, 14
-    { 128, 64, 32, 32 }, { 128, 96, 32, 32 },   // 15, 16
-    { 0, 96, 32, 32 }, { 32, 96, 32, 32 },      // 17, 18
-    { 64, 96, 32, 32 }, { 96, 96, 32, 32 },     // 19, 20
-    { 160, 96, 32, 32 }, { 160, 0, 32, 32 },    // 21, 22
-    { 160, 32, 32, 32 }, { 160, 64, 32, 32 },   // 23, 24
-    { 192, 0, 32, 32 }, { 224, 0, 32, 32 },     // 25, 26
-    { 192, 32, 32, 32 }, { 224, 32, 32, 32 },   // 27, 28
-    { 192, 64, 32, 32 }, { 224, 64, 32, 32 },   // 29, 30
-    { 192, 96, 32, 32 }, { 224, 96, 32, 32 }    // 31, 32
-};
 
 Tilemap::Tilemap(const char *valuesMap, const char *collidersMap, Texture2D tileMapTexture) {
     this->valuesMapFilePath = valuesMap;
     this->collidersMapFilePath = collidersMap;
     this->spritesheet = tileMapTexture;
     this->map = { 0 };
+    this->map.tileScale = 1;
 };
 
 void Tilemap::load() {
@@ -77,8 +58,8 @@ void Tilemap::loadValuesFromText() {
 
     this->map.tiles = (Tile *)malloc(counter * sizeof(Tile));
 
-    this->map.tileCountX = 12;
-    this->map.tileCountY = 8;
+    this->map.tileCountX = 16;
+    this->map.tileCountY = 16;
     counter = 0;
 
     while (!feof(valuesFile))
@@ -138,15 +119,17 @@ void Tilemap::loadCollidersFromImage() {
 }
 
 void Tilemap::draw() {
-    for (int y = 0; y < this->map.tileCountY; y++)
+    for (int x = 0; x < this->map.tileCountX; x++)
     {
-        for (int x = 0; x < this->map.tileCountX; x++)
+        for (int y = 0; y < this->map.tileCountY; y++)
         {
             // Draw each piece of the tileset in the right position to build map
-            Renderer::DrawTextureRec(this->spritesheet, TilesetRecs[this->map.tiles[y * this->map.tileCountX + x].value - 1],
-                Vector2{
-                this->map.position.x + x * this->map.tileSize, this->map.position.y + y * this->map.tileSize
-                }, WHITE);
+            const int tileIndex = this->map.tiles[x * this->map.tileCountY + y].value - 1;
+            const int tileY = tileIndex / SPRITESHEET_COLUMNS;
+            const int tileX = tileIndex % SPRITESHEET_COLUMNS;
+            const Rectangle srcRect = { tileX * this->map.tileSize, tileY * this->map.tileSize, this->map.tileSize, this->map.tileSize  };
+            const Rectangle destRect = { this->map.position.x + y * this->map.tileSize * this->map.tileScale , this->map.position.y + x * this->map.tileSize * this->map.tileScale , this->map.tileSize * this->map.tileScale, this->map.tileSize * this->map.tileScale };
+            Renderer::DrawTexturePro(this->spritesheet, srcRect, destRect, { 0, 0 }, 0, WHITE);
         }
     }
 }
@@ -156,28 +139,15 @@ void Tilemap::unload() {
 }
 
 void Tilemap::setTileSize(int tileSize) { this->map.tileSize = tileSize; }
-void Tilemap::setPosition(int screenWidth, int screenHeight) {
-    this->map.position = Vector2{ screenWidth / 2.f - this->map.tileCountX * this->map.tileSize / 2,
-                                  screenHeight / 2.f - this->map.tileCountY * this->map.tileSize / 2 };
+void Tilemap::setScreenSize(int screenWidth, int screenHeight) {
+    this->map.position = Vector2{ screenWidth / 2.f - this->map.tileCountX * this->map.tileSize,
+                                  screenHeight / 2.f - this->map.tileCountY * this->map.tileSize};
 }
 
 bool Tilemap::checkCollision(Rectangle player) {
-    Rectangle playerPadding = Rectangle{ player.x + PLAYER_COLLISION_PADDING, player.y + PLAYER_COLLISION_PADDING, player.width, player.height };
-    for (int y = 0; y < this->map.tileCountY; y++)
-    {
-        for (int x = 0; x < this->map.tileCountX; x++)
-        {
-            Rectangle cell = Rectangle{
-               (int)this->map.position.x + x * this->map.tileSize + PLAYER_COLLISION_PADDING, (int)this->map.position.y + y * this->map.tileSize + PLAYER_COLLISION_PADDING, this->map.tileSize, this->map.tileSize
-            };
-            if ((this->map.tiles[y * this->map.tileCountX + x].collider == 0) &&
-                this->checkCollisionRecs(playerPadding, cell))
-            {
-                return true;
-            }
-        }
-    }
-    return false;
+    const std::vector<int> values = this->getRectValues(player);
+    std::vector<int>::const_iterator it = std::find(values.begin(), values.end(), 1);
+    return it != values.end();
 }
 
 bool Tilemap::checkCollisionRecs(Rectangle rec1, Rectangle rec2)
@@ -190,4 +160,24 @@ bool Tilemap::checkCollisionRecs(Rectangle rec1, Rectangle rec2)
     if ((dx <= (rec1.width / 2 + rec2.width / 2)) && ((dy <= (rec1.height / 2 + rec2.height / 2)))) collision = true;
 
     return collision;
+}
+
+const std::vector<int> Tilemap::getRectValues(Rectangle player) {
+    //TODO: Optimize this to only look for collisions on the cells surrounding the player and not everything
+    Rectangle playerPadding = Rectangle{ player.x + PLAYER_COLLISION_PADDING, player.y + PLAYER_COLLISION_PADDING, player.width, player.height };
+    std::vector<int> collisionValues = std::vector<int>();
+    for (int y = 0; y < this->map.tileCountY; y++)
+    {
+        for (int x = 0; x < this->map.tileCountX; x++)
+        {
+            Rectangle cell = Rectangle{
+               (int)this->map.position.x + x * this->map.tileSize * this->map.tileScale + PLAYER_COLLISION_PADDING, (int)this->map.position.y + y * this->map.tileSize * this->map.tileScale + PLAYER_COLLISION_PADDING, this->map.tileSize*this->map.tileScale, this->map.tileSize*this->map.tileScale
+            };
+            if (this->checkCollisionRecs(playerPadding, cell))
+            {
+                collisionValues.push_back(this->map.tiles[y * this->map.tileCountX + x].collider);
+            }
+        }
+    }
+    return collisionValues;
 }

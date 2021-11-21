@@ -4,6 +4,7 @@
 #include "WinScreen.h"
 #include "Player.h"
 #include "AssetStore.h"
+#include "Map.h"
 
 GameStatus::GameStatus() {
     this->isPlaying = false;
@@ -29,8 +30,9 @@ void GameStatus::reset() {
     delete this->player;
 
     this->isPlaying = this->currentScreen->getType() == ScreenType::Gameplay;
-    Tilemap *tilemap = AssetStore::getInstance().getTilemap();
-    this->player = new Player(tilemap->getPosition().x + 1 * tilemap->getTileSize() + 8, tilemap->getPosition().y + 1 * tilemap->getTileSize() + 8);
+    Map::getInstance().reset();
+    const Vector2 playerPosition = Map::getInstance().getPlayerStartingPosition();
+    this->player = new Player(playerPosition.x, playerPosition.y);
 }
 
 Screen *GameStatus::getCurrentScreen() {

@@ -4,13 +4,14 @@
 #include "WindowHandler.h"
 #include "GameStatus.h"
 #include "Screen.h"
-#include "TitleScreen.h"
+#include "LogoScreen.h"
 #include "raudio.h"
 
 #define _CRT_SECURE_NO_DEPRECATE
 #define RLGL_STANDALONE
 #define RLGL_IMPLEMENTATION
 #include "rlgl.h"
+#include "Map.h"
 
 const int ScreenWidth = 1080;
 const int ScreenHeight = 810;
@@ -20,12 +21,11 @@ int main(void)
 
     WindowHandler::getInstance().initWindowAndDevice(ScreenWidth, ScreenHeight, "DUNGEONS", 60);
     InitAudioDevice();
-    AssetStore::getInstance().getTilemap()->setPosition(ScreenWidth, ScreenHeight);
+    Map::getInstance().setScreenSize(ScreenWidth, ScreenHeight);
 
     AssetStore::getInstance().loadMusic();
 
-    //GameStatus::getInstance().setInitialScreen(new LogoScreen(ScreenWidth, ScreenHeight));
-    GameStatus::getInstance().setInitialScreen(new TitleScreen(ScreenWidth, ScreenHeight));
+    GameStatus::getInstance().setInitialScreen(new LogoScreen(ScreenWidth, ScreenHeight));
 
     while (!WindowHandler::getInstance().shouldClose())
     {
@@ -41,7 +41,7 @@ int main(void)
     AssetStore::getInstance().unloadFonts();
     AssetStore::getInstance().unloadMusic();
     AssetStore::getInstance().unloadTextures();
-    AssetStore::getInstance().unloadTilemap();
+    Map::getInstance().unload();
   
     CloseAudioDevice();
     WindowHandler::getInstance().closeWindow();
