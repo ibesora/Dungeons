@@ -30,3 +30,7 @@ const char *Texts::Beginning3 = "Are you bored?";
 const char *Texts::Beginning4 = "You like this cave, don't you?";
 const char *Texts::Beginning5 = "KONAMI code. Do you know what's that?";
 const char *Texts::Beginning6 = "KONAMI code. Google that!";
+const char *Texts::WTF1 = "What...";
+const char *Texts::WTF2 = "... the ...";
+const char *Texts::WTF3 = "... fuck?";
+const char *Texts::WTF4 = "WTF!";

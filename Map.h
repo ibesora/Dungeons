@@ -16,6 +16,7 @@ public:
 	void unload();
 	Vector2 movePlayer(Rectangle oldPlayer, Rectangle newPlayer);
 	int getTimesAtTheBeginning();
+	int getTimesWTF();
 protected:
     Map();
 	void buildMap();
@@ -26,6 +27,7 @@ protected:
 	int screenWidth;
 	int screenHeight;
 	int timesAtTheBeginning;
+	int timesWTF;
 	std::vector<Room*> rooms;
 	std::vector<Tilemap *> tilemaps;
 };

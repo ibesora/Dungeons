@@ -32,4 +32,8 @@ public:
 	static const char *Beginning4;
 	static const char *Beginning5;
 	static const char *Beginning6;
+	static const char *WTF1;
+	static const char *WTF2;
+	static const char *WTF3;
+	static const char *WTF4;
 };

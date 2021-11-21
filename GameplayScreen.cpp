@@ -20,7 +20,9 @@ GameplayScreen::GameplayScreen(int width, int height) : Screen(ScreenType::Gamep
     this->textAnimFrame = 0;
     this->textAlpha = 0.0f;
     this->timesAtTheBeginning = 0;
+    this->timesWTF = 0;
     this->showingText = false;
+    this->showingWTFText = false;
 }
 
 void GameplayScreen::updateGameStatus() {
@@ -44,7 +46,13 @@ void GameplayScreen::updateText() {
         this->textAlpha = 0;
         this->timesAtTheBeginning = Map::getInstance().getTimesAtTheBeginning();
     }
-    if (this->showingText) {
+    else if (!this->showingWTFText && Map::getInstance().getTimesWTF() != this->timesWTF) {
+        this->showingWTFText = true;
+        this->textAnimFrame = 0;
+        this->textAlpha = 0;
+        this->timesWTF = Map::getInstance().getTimesWTF();
+    }
+    if (this->showingText || showingWTFText) {
         this->textAnimFrame++;
 
         if (this->textAnimFrame < FadeInFramesNum) {
@@ -59,6 +67,7 @@ void GameplayScreen::updateText() {
         else {
             this->textAlpha = 0.0f;
             this->showingText = 0;
+            this->showingWTFText = 0;
         }
 
     }
@@ -71,6 +80,13 @@ const char *GameplayScreen::getTextFromId(int id) {
     else if (id == 4) return Texts::Beginning4;
     else if (id >= 5 && id < 15) return Texts::Beginning5;
     return Texts::Beginning6;
+}
+
+const char *GameplayScreen::getWTFTextFromId(int id) {
+    if (id == 1) return Texts::WTF1;
+    else if (id == 2) return Texts::WTF2;
+    else if (id == 3) return Texts::WTF3;
+    return Texts::WTF4;
 }
 
 void GameplayScreen::draw() {
@@ -90,10 +106,14 @@ void GameplayScreen::drawPlayer() {
 }
 
 void GameplayScreen::drawText() {
+    const char *text = "";
     if (this->showingText) {
-        const char *text = this->getTextFromId(this->timesAtTheBeginning);
-        const int sizeInPx = strlen(text) * 20;
-        Color color = { WHITE.r, WHITE.g, WHITE.b, this->textAlpha * 255.0f };
-        TextRenderer::getInstance().draw(text, this->width / 2 - sizeInPx / 2, this->height - 100, 20, color);
+        text = this->getTextFromId(this->timesAtTheBeginning);
     }
+    else if (this->showingWTFText) {
+        text = this->getWTFTextFromId(this->timesWTF);
+    }
+    const int sizeInPx = strlen(text) * 20;
+    Color color = { WHITE.r, WHITE.g, WHITE.b, this->textAlpha * 255.0f };
+    TextRenderer::getInstance().draw(text, this->width / 2 - sizeInPx / 2, this->height - 100, 20, color);
 }

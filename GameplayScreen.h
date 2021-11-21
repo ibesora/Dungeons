@@ -19,10 +19,13 @@ private:
     void drawPlayer();
     void drawText();
     const char *getTextFromId(int id);
+    const char *getWTFTextFromId(int id);
 
     int textAnimFrame;
     int timesAtTheBeginning;
+    int timesWTF;
     float textAlpha;
     bool showingText;
+    bool showingWTFText;
     Rectangle currentFrameRec;
 };

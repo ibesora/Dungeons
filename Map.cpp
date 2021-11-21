@@ -7,6 +7,7 @@ Map::Map() {
     this->screenHeight = 0;
     this->screenWidth = 0;
     this->timesAtTheBeginning = 0;
+    this->timesWTF = 0;
     this->lastDoorTraversed = (Tilemap::FloorValues)0;
     this->currentRoom = nullptr;
     this->previousRoom = nullptr;
@@ -127,6 +128,7 @@ void Map::buildMap() {
 
 void Map::reset() {
     this->timesAtTheBeginning = 0;
+    this->timesWTF = 0;
     this->changeRoom(this->rooms[0]);
 }
 
@@ -238,6 +240,13 @@ void Map::changeRoom(Room *nextRoom) {
     if (this->currentRoom->getType() == Room::RoomType::Start) {
         this->timesAtTheBeginning++;
     }
+    else if ((this->currentRoom == this->rooms[4] && this->previousRoom == this->rooms[3])
+        || (this->currentRoom == this->rooms[7] && this->previousRoom == this->rooms[6])
+        || (this->currentRoom == this->rooms[8] && this->previousRoom == this->rooms[7])
+        || (this->currentRoom == this->rooms[9] && this->previousRoom == this->rooms[8])) {
+        this->timesWTF++;
+    }
 }
 
 int Map::getTimesAtTheBeginning() { return this->timesAtTheBeginning; }
+int Map::getTimesWTF() { return this->timesWTF; }
