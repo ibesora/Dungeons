@@ -61,21 +61,21 @@ void Map::buildMap() {
     // Create all the needed rooms
     Room *start = new Room(Room::RoomType::Start, startTilemap);
     this->rooms.push_back(start);
-    Room *fourDoors1 = new Room(Room::RoomType::FourDoors, fourDoorsTilemap);
+    Room *fourDoors1 = new Room(Room::RoomType::FourDoors, fourDoorsTilemap, "resources/tilemaps/objects1.txt", this->screenWidth, this->screenHeight);
     this->rooms.push_back(fourDoors1);
-    Room *fourDoors2 = new Room(Room::RoomType::FourDoors, fourDoorsTilemap);
+    Room *fourDoors2 = new Room(Room::RoomType::FourDoors, fourDoorsTilemap, "resources/tilemaps/objects2.txt", this->screenWidth, this->screenHeight);
     this->rooms.push_back(fourDoors2);
-    Room *fourDoors3 = new Room(Room::RoomType::FourDoors, fourDoorsTilemap);
+    Room *fourDoors3 = new Room(Room::RoomType::FourDoors, fourDoorsTilemap, "resources/tilemaps/objects3.txt", this->screenWidth, this->screenHeight);
     this->rooms.push_back(fourDoors3);
-    Room *fourDoors4 = new Room(Room::RoomType::FourDoors, fourDoorsTilemap);
+    Room *fourDoors4 = new Room(Room::RoomType::FourDoors, fourDoorsTilemap, "resources/tilemaps/objects4.txt", this->screenWidth, this->screenHeight);
     this->rooms.push_back(fourDoors4);
-    Room *fourDoors5 = new Room(Room::RoomType::FourDoors, fourDoorsTilemap);
+    Room *fourDoors5 = new Room(Room::RoomType::FourDoors, fourDoorsTilemap, "resources/tilemaps/objects5.txt", this->screenWidth, this->screenHeight);
     this->rooms.push_back(fourDoors5);
-    Room *fourDoors6 = new Room(Room::RoomType::FourDoors, fourDoorsTilemap);
+    Room *fourDoors6 = new Room(Room::RoomType::FourDoors, fourDoorsTilemap, "resources/tilemaps/objects6.txt", this->screenWidth, this->screenHeight);
     this->rooms.push_back(fourDoors6);
-    Room *fourDoors7 = new Room(Room::RoomType::FourDoors, fourDoorsTilemap);
+    Room *fourDoors7 = new Room(Room::RoomType::FourDoors, fourDoorsTilemap, "resources/tilemaps/objects7.txt", this->screenWidth, this->screenHeight);
     this->rooms.push_back(fourDoors7);
-    Room *fourDoors8 = new Room(Room::RoomType::FourDoors, fourDoorsTilemap);
+    Room *fourDoors8 = new Room(Room::RoomType::FourDoors, fourDoorsTilemap, "resources/tilemaps/objects8.txt", this->screenWidth, this->screenHeight);
     this->rooms.push_back(fourDoors8);
     Room *exit = new Room(Room::RoomType::Exit, exitTilemap);
     this->rooms.push_back(exit);
@@ -177,6 +177,13 @@ void Map::unload() {
 
 Vector2 Map::movePlayer(Rectangle oldPlayer, Rectangle newPlayer) {
     std::vector<int> values = this->currentRoom->getTilemap()->getRectValues(newPlayer);
+    if (this->currentRoom->getObjectsTilemap()) {
+        // We add objects as colliders
+        std::vector<int> objectValues = this->currentRoom->getObjectsTilemap()->getRectValues(newPlayer);
+        for (int i : objectValues) {
+            if (i != 0) values.push_back((int)Tilemap::FloorValues::Collision);
+        }
+    }
     std::vector<int>::iterator it = std::find(values.begin(), values.end(), (int)Tilemap::FloorValues::Collision);
     Vector2 newPosition = { (float)newPlayer.x, (float)newPlayer.y };
     if (it != values.end()) newPosition = { (float)oldPlayer.x, (float)oldPlayer.y };

@@ -44,5 +44,6 @@ private:
     void loadCollidersFromText();
     void loadValuesFromImage();
     void loadCollidersFromImage();
+    void loadCollidersFromValues();
     bool checkCollisionRecs(Rectangle, Rectangle);
 };

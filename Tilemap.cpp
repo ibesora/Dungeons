@@ -30,13 +30,15 @@ void Tilemap::load() {
         if (strcmp(fileExt, ".txt") == 0)
         {
             this->loadValuesFromText();
-            this->loadCollidersFromText();
+            if (this->collidersMapFilePath != "") this->loadCollidersFromText();
+            else this->loadCollidersFromValues();
 
         }
         else if (strcmp(fileExt, ".bmp") == 0)
         {
             this->loadValuesFromImage();
-            this->loadCollidersFromImage();
+            if (this->collidersMapFilePath != "")  this->loadCollidersFromImage();
+            else this->loadCollidersFromValues();
         }
     }
 }
@@ -114,6 +116,15 @@ void Tilemap::loadCollidersFromImage() {
             const int index = i * image.width + j;
             const Color cellColor = image.data[index];
             this->map.tiles[index].collider = cellColor.b;
+        }
+    }
+}
+
+void Tilemap::loadCollidersFromValues() {
+    for (int i = 0; i < this->map.tileCountX; ++i) {
+        for (int j = 0; j < this->map.tileCountY; ++j) {
+            const int index = i * this->map.tileCountX + j;
+            this->map.tiles[index].collider = this->map.tiles[index].value != 0;
         }
     }
 }
