@@ -94,6 +94,7 @@ void GameplayScreen::draw() {
     Renderer::ClearBackground(BLACK);
     this->drawBackground();
     this->drawPlayer();
+    this->drawBullets();
     this->drawText();
 }
 
@@ -103,6 +104,14 @@ void GameplayScreen::drawBackground() {
 
 void GameplayScreen::drawPlayer() {
     GameStatus::getInstance().getPlayer()->draw();
+}
+
+void GameplayScreen::drawBullets() {
+    for (int i = 0; i < GameStatus::getInstance().getEnemyBulletsNumber(); ++i) {
+        GameStatus::BulletInfo bullet = GameStatus::getInstance().getEnemyBullet(i);
+        Renderer::DrawRectangle(bullet.position.x, bullet.position.y, 15, 15, BLUE);
+        Renderer::DrawRectangle(bullet.position.x + 3, bullet.position.y + 3, 12, 12, YELLOW);
+    }
 }
 
 void GameplayScreen::drawText() {

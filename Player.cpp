@@ -7,7 +7,7 @@
 
 const int XSpeed = 20;
 const int YSpeed = 20;
-const int StartingLife = 1000;
+const int StartingLife = 3;
 const int GodMode = false;
 
 Player::Player(float x, float y) {
@@ -43,4 +43,12 @@ void Player::setGodMode(bool godMode) { this->godMode = godMode; }
 
 void Player::draw() {
     Renderer::DrawTexture(AssetStore::getInstance().getPlayerTexture(), this->position.x, this->position.y, WHITE);
+}
+
+bool Player::checkCollision(Vector2 point) {
+    const float distX = this->position.x - point.x;
+    const float distY = this->position.y - point.y;
+    const int squaredPlayerRadius = 16 * 16;
+    const int squaredDistance = distX * distX + distY * distY;
+    return squaredDistance < squaredPlayerRadius;
 }

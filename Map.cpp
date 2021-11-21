@@ -162,6 +162,10 @@ Vector2 Map::getPlayerStartingPosition() {
     return { 0, 0 };
 }
 
+Vector2 Map::getEnemyStartingPosition() {
+    return { (float)this->screenWidth / 2 - 28, (float)this->screenHeight / 2 + 20};
+}
+
 Map &Map::getInstance() {
     static Map instance;
     return instance;
@@ -250,3 +254,4 @@ void Map::changeRoom(Room *nextRoom) {
 
 int Map::getTimesAtTheBeginning() { return this->timesAtTheBeginning; }
 int Map::getTimesWTF() { return this->timesWTF; }
+bool Map::areThereEnemies() { return this->currentRoom->getType() == Room::RoomType::Exit; }

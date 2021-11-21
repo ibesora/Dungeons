@@ -13,10 +13,12 @@ public:
 	void draw();
 	void reset();
 	Vector2 getPlayerStartingPosition();
+	Vector2 getEnemyStartingPosition();
 	void unload();
 	Vector2 movePlayer(Rectangle oldPlayer, Rectangle newPlayer);
 	int getTimesAtTheBeginning();
 	int getTimesWTF();
+	bool areThereEnemies();
 protected:
     Map();
 	void buildMap();

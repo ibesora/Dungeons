@@ -146,8 +146,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CircleBulletPattern.cpp" />
     <ClCompile Include="CreditsScreen.cpp" />
     <ClCompile Include="EndingScreen.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameplayScreen.cpp" />
     <ClCompile Include="GameStatus.cpp" />
     <ClCompile Include="HowToPlayScreen.cpp" />
@@ -171,8 +173,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetStore.h" />
+    <ClInclude Include="BulletPattern.h" />
+    <ClInclude Include="CircleBulletPattern.h" />
     <ClInclude Include="CreditsScreen.h" />
     <ClInclude Include="EndingScreen.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameplayScreen.h" />
     <ClInclude Include="GameStatus.h" />
     <ClInclude Include="HowToPlayScreen.h" />
