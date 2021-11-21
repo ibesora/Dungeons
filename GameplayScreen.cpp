@@ -95,6 +95,7 @@ void GameplayScreen::draw() {
     this->drawBackground();
     this->drawPlayer();
     this->drawBullets();
+    this->drawPlayerHealth();
     this->drawText();
 }
 
@@ -111,6 +112,12 @@ void GameplayScreen::drawBullets() {
         GameStatus::BulletInfo bullet = GameStatus::getInstance().getEnemyBullet(i);
         Renderer::DrawRectangle(bullet.position.x, bullet.position.y, 15, 15, BLUE);
         Renderer::DrawRectangle(bullet.position.x + 3, bullet.position.y + 3, 12, 12, YELLOW);
+    }
+}
+
+void GameplayScreen::drawPlayerHealth() {
+    for (int i = 0; i < GameStatus::getInstance().getPlayerLife(); ++i) {
+        Renderer::DrawTexture(AssetStore::getInstance().getHeartTexture(), 284 + 32 * i, 100, WHITE);
     }
 }
 

@@ -18,6 +18,7 @@ private:
     void drawBackground();
     void drawPlayer();
     void drawBullets();
+    void drawPlayerHealth();
     void drawText();
     const char *getTextFromId(int id);
     const char *getWTFTextFromId(int id);

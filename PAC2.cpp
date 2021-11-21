@@ -5,7 +5,6 @@
 #include "GameStatus.h"
 #include "Screen.h"
 #include "LogoScreen.h"
-#include "GameplayScreen.h"
 #include "raudio.h"
 
 #define _CRT_SECURE_NO_DEPRECATE
@@ -26,8 +25,7 @@ int main(void)
 
     AssetStore::getInstance().loadMusic();
 
-    //GameStatus::getInstance().setInitialScreen(new LogoScreen(ScreenWidth, ScreenHeight));
-    GameStatus::getInstance().setInitialScreen(new GameplayScreen(ScreenWidth, ScreenHeight));
+    GameStatus::getInstance().setInitialScreen(new LogoScreen(ScreenWidth, ScreenHeight));
 
     while (!WindowHandler::getInstance().shouldClose())
     {

@@ -13,6 +13,7 @@ AssetStore::AssetStore() {
     this->tilesetTexture = TextureHandler::LoadTexture("resources/tileset.bmp");
     this->fontTexture = TextureHandler::LoadTexture("resources/font.bmp");
     this->logoTexture = TextureHandler::LoadTexture("resources/logo.bmp");
+    this->heartTexture = TextureHandler::LoadTexture("resources/heart.bmp");
     this->menuSong = LoadMusicStream("resources/scottaltham_-_Never_Heard_a_Rhyme_Like_This_Before.mp3");
     this->gameSong = LoadMusicStream("resources/Karstenholymoly_-_The_Thunderstorm.mp3");
     this->gameSong = LoadMusicStream("resources/Karstenholymoly_-_The_Thunderstorm.mp3");
@@ -28,6 +29,7 @@ void AssetStore::unloadTextures() {
     TextureHandler::UnloadTexture(this->youDiedTexture);
     TextureHandler::UnloadTexture(this->tilesetTexture);
     TextureHandler::UnloadTexture(this->fontTexture);
+    TextureHandler::UnloadTexture(this->heartTexture);
 }
 
 void AssetStore::loadMusic() {
